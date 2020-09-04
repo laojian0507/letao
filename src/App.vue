@@ -1,31 +1,88 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div class="container">
+    <!-- 头部 -->
+    <!-- sticky吸顶 -->
+    <van-sticky >
+      <div class="header" v-if="active == 0">
+        <img src="@/assets/images/logo.png" alt />
+        <van-search placeholder="请输入搜索关键词" />
+      </div>
+      <van-nav-bar v-else :title="title" left-text="返回" @click-left="$router.go(-1)" left-arrow></van-nav-bar>
+    </van-sticky>
+
+    <!-- 中间 -->
+    <router-view></router-view>
+
+    <!-- 首页底部 -->
+    <van-tabbar v-model="active" v-show="isHome" route>
+      <van-tabbar-item to="/home" icon="wap-home-o">首页</van-tabbar-item>
+      <van-tabbar-item to="/shopcar" :badge="$store.getters.getGoodsCount" icon="shopping-cart-o">购物车</van-tabbar-item>
+      <van-tabbar-item to="/person" icon="user-o">我的乐淘</van-tabbar-item>
+    </van-tabbar>
+
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import {
+  Tabbar,
+  TabbarItem,
+  NavBar,
+  Icon,
+  Sticky,
+  Search,
+  GoodsActionIcon,
+  GoodsAction,
+  GoodsActionButton,
+} from "vant";
 
-#nav {
-  padding: 30px;
+export default {
+  components: {
+    "van-tabbar": Tabbar,
+    "van-tabbar-item": TabbarItem,
+    "van-nav-bar": NavBar,
+    "van-icon": Icon,
+    "van-sticky": Sticky,
+    "van-search": Search,
+    "van-goods-action-icon": GoodsActionIcon,
+    "van-goods-action": GoodsAction,
+    "van-goods-action-button": GoodsActionButton,
+  },
+  data() {
+    return {
+      active: 0,
+      title: "",
+      isHome: true,
+    };
+  },
+  methods: {
+    // cutHeader(msg) {
+    //   this.title = msg;
+    // },
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  },
+};
+</script>
 
-    &.router-link-exact-active {
-      color: #42b983;
+<style lang="scss" scoped>
+.container {
+  max-width: 750px;
+  min-width: 320px;
+  margin: auto;
+  margin-bottom: 50px;
+
+  .header {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+
+    img {
+      height: 44px;
+      margin-left: 4px;
+    }
+
+    .van-search {
+      flex: 1;
     }
   }
 }
