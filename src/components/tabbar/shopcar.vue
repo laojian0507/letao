@@ -28,10 +28,10 @@
         <div class="shop_item" v-for="(item, index) in my_cart_data" :key="item.id">
           <van-checkbox :name="item.id"></van-checkbox>
           <div class="img_container">
-            <img :src="item.thumb_path" alt />
+            <img @click.stop="look_thumb(item.thumb_path)" :src="item.thumb_path" alt />
           </div>
           <div class="info">
-            <div class="title">{{item.title}}</div>
+            <div class="title" @click.stop="$router.push('/goodsDetails/'+item.id)">{{item.title}}</div>
             <div class="price_num">
               <span class="price">￥{{item.sell_price}}</span>
               <van-stepper
@@ -53,12 +53,12 @@
       >共选中{{$store.getters.getSelectedGoodsNum}}件商品</van-divider>
 
       <van-cell>
-        <img class="playIcon" src="@/assets/images/wxplay.jpg" alt />
+        <van-icon class="playIcon" name="wechat" color="rgb(0, 162, 68)" size="25px"></van-icon>
         <span>微信支付</span>
       </van-cell>
       <van-cell>
-        <img class="playIcon" src="@/assets/images/yinlian.jpg" alt />
-        <span>银联支付</span>
+        <van-icon class="playIcon" name="alipay" color="rgb(0, 173, 234)" size="25px"></van-icon>
+        <span>支付宝支付</span>
       </van-cell>
 
       <van-submit-bar
@@ -94,6 +94,8 @@ import {
   Cell,
   CheckboxGroup,
   Popup,
+  Icon,
+  ImagePreview,
 } from "vant";
 import { getshopcarlist } from "@/api/index.js";
 export default {
@@ -108,6 +110,7 @@ export default {
     "van-cell": Cell,
     "van-checkbox-group": CheckboxGroup,
     "van-popup": Popup,
+    "van-icon": Icon,
   },
   data() {
     return {
@@ -148,12 +151,12 @@ export default {
         // onClose: onClose(),
       });
 
-    //   let _this = this;
-    //   function onClose() {
-    //     setTimeout(function () {
-    //       _this.showPopup();
-    //     }, 2000);
-    //   }
+      //   let _this = this;
+      //   function onClose() {
+      //     setTimeout(function () {
+      //       _this.showPopup();
+      //     }, 2000);
+      //   }
     },
     // 展示弹窗
     showPopup() {
@@ -196,6 +199,16 @@ export default {
     // 修改商品选中状态
     changeChecked() {
       this.$store.commit("changeChecked", this.select_result);
+    },
+    // 查看购物车商品缩略图
+    look_thumb(path) {
+      if (path == null) {
+        Toast("图片溜走了…");
+      } else {
+        let arr = [];
+        arr.push(path);
+        ImagePreview(arr);
+      }
     },
   },
   created() {

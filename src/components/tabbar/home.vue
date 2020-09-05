@@ -21,7 +21,7 @@
         <img src="@/assets/images/menu18.png" alt />
         <span>美图欣赏</span>
       </van-grid-item>
-      <van-grid-item>
+      <van-grid-item to="/test">
         <img src="@/assets/images/menu15.png" alt />
         <span>乐淘服饰</span>
       </van-grid-item>

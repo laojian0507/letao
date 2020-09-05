@@ -14,6 +14,10 @@
       description="图片被外星人拐走了……"
     />
 
+    <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+      <van-icon v-if="isShowStar" class="star" name="star" color="red" size="20px" />
+    </transition>
+
     <div class="goodsInfo common">
       <div class="title">{{goodsInfo.title}}</div>
       <van-divider />
@@ -51,7 +55,7 @@
         to="/shopcar"
       />
       <van-goods-action-icon icon="shop-o" text="店铺" badge="12" />
-      <van-goods-action-button @click="add_shopcart" type="warning" text="加入购物车" />
+      <van-goods-action-button @click="add_shopcart(); isShowStar = !isShowStar"  type="warning" text="加入购物车" />
       <van-goods-action-button type="danger" text="立即购买" />
     </van-goods-action>
   </div>
@@ -69,6 +73,7 @@ import {
   GoodsActionButton,
   ImagePreview,
   Toast,
+  Icon,
 } from "vant";
 import { getGoodsSwipe, getGoodsInfo } from "@/api/index.js";
 
@@ -80,6 +85,7 @@ export default {
       goodsSwipe: [],
       goods_count: 1,
       shopcartArr: [],
+      isShowStar: false,
     };
   },
   components: {
@@ -91,6 +97,7 @@ export default {
     "van-goods-action-icon": GoodsActionIcon,
     "van-goods-action": GoodsAction,
     "van-goods-action-button": GoodsActionButton,
+    "van-icon": Icon,
   },
   created() {
     this.$parent.title = "商品详情";
@@ -99,6 +106,19 @@ export default {
     this.getGoodsSwipeDataAndInfo();
   },
   methods: {
+    beforeEnter(el) {
+        // console.log(el);
+      el.style.transform = "translate(0px, 120px)";
+    },
+    enter(el, done) {
+      el.offsetWidth;
+      el.style.transform = "translate(-150px, 730px)";
+      el.style.transition = "all 1.5s ease";
+      done();
+    },
+    afterEnter(el) {
+      this.isShowStar = !this.isShowStar;
+    },
     async getGoodsSwipeDataAndInfo() {
       let swipe = await getGoodsSwipe(this.id);
       let info = await getGoodsInfo(this.id);
@@ -143,6 +163,10 @@ export default {
   img {
     width: 100%;
     vertical-align: top;
+  }
+
+  .star {
+      position:absolute;
   }
 
   .common {
@@ -232,6 +256,13 @@ export default {
         width: 100%;
       }
     }
+  }
+
+  .dot {
+    width: 15px;
+    height: 15px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 50%;
   }
 }
 </style>

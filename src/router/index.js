@@ -17,6 +17,7 @@ import coupleBack from "@/components/person/coupleBack.vue";
 import myOrder from "@/components/person/myOrder.vue";
 import login from "@/components/person/login.vue";
 import addrsEdit from "@/components/person/addrsEdit.vue";
+import test from "@/components/common/test.vue";
 
 const routes = [
     {path: "/", redirect: '/home'},
@@ -34,6 +35,7 @@ const routes = [
     {path: "/myOrder", component: myOrder},
     {path: "/login", component: login},
     {path: "/addrsEdit", component: addrsEdit},
+    {path: "/test", component: test},
 ]
 
 const router = new VueRouter({
