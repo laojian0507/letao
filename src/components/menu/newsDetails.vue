@@ -81,10 +81,12 @@ export default {
     this.getNewsCommentsData();
   },
   methods: {
+    //   获取新闻详情数据
     async getNewsDatails() {
       let { message } = await getNewsDetails(this.newsId);
       this.news = message[0];
     },
+    // 获取对应的评论
     async getNewsCommentsData() {
       if (this.isMore) {
         this.pageIndex++;
@@ -100,6 +102,7 @@ export default {
         Toast("没有更多啦");
       }
     },
+    // 提交评论
     async submit_comment() {
       if (this.message.trim() == "") {
         Toast("不能空评论");
@@ -114,6 +117,7 @@ export default {
         Toast("评论失败");
       }
     },
+    // 下拉刷新
     onLoad() {
       setTimeout(() => {
         if (this.refreshing) {
@@ -133,6 +137,7 @@ export default {
         }
       }, 1000);
     },
+    // 加载更多
     onRefresh() {
       // 清空列表数据
       this.finished = false;

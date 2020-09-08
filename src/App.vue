@@ -2,8 +2,8 @@
   <div class="container">
     <!-- 头部 -->
     <!-- sticky吸顶 -->
-    <van-sticky >
-      <div class="header" v-if="active == 0">
+    <van-sticky>
+      <div id="header" class="header" v-if="active == 0">
         <img src="@/assets/images/logo.png" alt />
         <van-search placeholder="请输入搜索关键词" />
       </div>
@@ -16,10 +16,13 @@
     <!-- 首页底部 -->
     <van-tabbar v-model="active" v-show="isHome" route>
       <van-tabbar-item to="/home" icon="wap-home-o">首页</van-tabbar-item>
-      <van-tabbar-item to="/shopcar" :badge="$store.getters.getGoodsCount" icon="shopping-cart-o">购物车</van-tabbar-item>
+      <van-tabbar-item
+        to="/shopcar"
+        :badge="$store.getters.getGoodsCount"
+        icon="shopping-cart-o"
+      >购物车</van-tabbar-item>
       <van-tabbar-item to="/person" icon="user-o">我的乐淘</van-tabbar-item>
     </van-tabbar>
-
   </div>
 </template>
 
@@ -54,12 +57,6 @@ export default {
       title: "",
       isHome: true,
     };
-  },
-  methods: {
-    // cutHeader(msg) {
-    //   this.title = msg;
-    // },
-
   },
 };
 </script>

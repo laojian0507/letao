@@ -11,13 +11,15 @@ import goodsList from "@/components/menu/goodsList.vue";
 import newsList from "@/components/menu/newsList.vue";
 import pretty_pic from "@/components/menu/pretty_pic.vue";
 import newsDetails from "@/components/menu/newsDetails.vue";
-import addrs from "@/components/person/addrs.vue";
 import changePassword from "@/components/person/changePassword.vue";
 import coupleBack from "@/components/person/coupleBack.vue";
 import myOrder from "@/components/person/myOrder.vue";
 import login from "@/components/person/login.vue";
-import addrsEdit from "@/components/person/addrsEdit.vue";
-import test from "@/components/common/test.vue";
+import register from "@/components/person/register.vue";
+import addressList from "@/components/address/addressList.vue";
+import addressEdit from "@/components/address/addressEdit.vue";
+import addaddress from "@/components/address/addaddress.vue";
+// import test from "@/components/common/test.vue";
 
 const routes = [
     {path: "/", redirect: '/home'},
@@ -29,17 +31,33 @@ const routes = [
     {path: "/newsList", component: newsList},
     {path: "/pretty_pic", component: pretty_pic},
     {path: "/newsDetails/:id", component: newsDetails},
-    {path: "/addrs", component: addrs},
+    {path: "/addressList", component: addressList},
     {path: "/changePassword", component: changePassword},
     {path: "/coupleBack", component: coupleBack},
     {path: "/myOrder", component: myOrder},
     {path: "/login", component: login},
-    {path: "/addrsEdit", component: addrsEdit},
-    {path: "/test", component: test},
+    {path: "/register", component: register},
+    {path: "/addressEdit/:obj", component: addressEdit},
+    {path: "/addaddress", component: addaddress},
+    // {path: "/test", component: test},
 ]
 
 const router = new VueRouter({
   routes
 })
+
+// 路由守卫
+// router.beforeEach((to, from, next) => {
+//     if(to.path != '/home' && to.path != '/shopcar' && to.path != '/person'){
+//         // Vue.nextTick(()=>{
+//         //     console.log(Vue.title);
+//         // })
+//         // console.log(to);
+//         // let hread = document.getElementsByClassName("header")[0]
+//     }
+//     // let header = document.getElementById("header");
+//     // console.log(header);
+//     next()
+// })
 
 export default router

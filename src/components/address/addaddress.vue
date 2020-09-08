@@ -1,0 +1,44 @@
+<template>
+  <div class="addrsEdit_container">
+    <van-address-edit
+      :area-list="areaList"
+      show-postal
+      show-set-default
+      :area-columns-placeholder="['请选择', '请选择', '请选择']"
+      @save="onSave"
+    />
+  </div>
+</template>
+
+<script>
+import { AddressEdit, Toast } from "vant";
+import areaList from "@/utils/area.js";
+import { addaddress } from "@/api/index.js";
+export default {
+  components: {
+    "van-address-edit": AddressEdit,
+  },
+  created() {
+    this.$parent.title = "添加地址";
+    this.$parent.active = -1;
+    this.$parent.isHome = false;
+  },
+  data() {
+    return {
+      areaList,
+    };
+  },
+  methods: {
+    async onSave(val) {
+      let userId = this.$store.state.userInfo.id;
+      let { status, message } = await addaddress(userId, val);
+      Toast(message);
+      status == 0 && this.$router.push("/addressList");
+    },
+
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

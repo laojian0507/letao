@@ -5,9 +5,11 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 var myCarData = JSON.parse(localStorage.getItem("mycart") || "[]")
+var userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}")
 const store = new Vuex.Store({
     state: {
         carData: myCarData,
+        userInfo,
     },
     mutations: {
         // 添加商品
@@ -15,6 +17,7 @@ const store = new Vuex.Store({
             var index = state.carData.findIndex(
                 (obj) => obj.id == goods.id
             );
+            // 商品存在则数量加上
             if (index !== -1) {
                 state.carData[index].goods_count += goods.goods_count;
             } else {
@@ -107,7 +110,12 @@ const store = new Vuex.Store({
                 })
             }
             return selectNum;
-        }
+        },
+        //
+        // getUserInfo (state) {
+        //     console.log(state.userInfo);
+        // }
+
 
     }
 })

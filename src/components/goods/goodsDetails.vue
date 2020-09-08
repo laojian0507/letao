@@ -55,7 +55,11 @@
         to="/shopcar"
       />
       <van-goods-action-icon icon="shop-o" text="店铺" badge="12" />
-      <van-goods-action-button @click="add_shopcart(); isShowStar = !isShowStar"  type="warning" text="加入购物车" />
+      <van-goods-action-button
+        @click="add_shopcart(); isShowStar = !isShowStar"
+        type="warning"
+        text="加入购物车"
+      />
       <van-goods-action-button type="danger" text="立即购买" />
     </van-goods-action>
   </div>
@@ -106,8 +110,8 @@ export default {
     this.getGoodsSwipeDataAndInfo();
   },
   methods: {
+    //   三个方法是加入购物车的动画过渡
     beforeEnter(el) {
-        // console.log(el);
       el.style.transform = "translate(0px, 120px)";
     },
     enter(el, done) {
@@ -119,12 +123,14 @@ export default {
     afterEnter(el) {
       this.isShowStar = !this.isShowStar;
     },
+    // 获取商品轮播图和商品数据
     async getGoodsSwipeDataAndInfo() {
       let swipe = await getGoodsSwipe(this.id);
       let info = await getGoodsInfo(this.id);
       this.goodsInfo = info.message;
       this.goodsSwipe = swipe.message;
     },
+    // 加入购物车
     add_shopcart() {
       let goods = {
         id: this.goodsInfo.id,
@@ -132,8 +138,10 @@ export default {
         price: this.goodsInfo.sell_price,
         select: true,
       };
+      //   到仓库进行本地存储
       this.$store.commit("add_goods_car", goods);
     },
+    // 商品详情图片预览
     async img_preview() {
       let { message } = await getGoodsSwipe(this.id);
       if (message.length == 0) {
@@ -166,7 +174,7 @@ export default {
   }
 
   .star {
-      position:absolute;
+    position: absolute;
   }
 
   .common {

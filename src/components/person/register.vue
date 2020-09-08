@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="register-container">
     <van-form @submit="onSubmit">
       <van-field
         v-model="username"
@@ -16,6 +16,14 @@
         placeholder="密码"
         :rules="[{ required: true, message: '请填写密码' }]"
       />
+      <van-field
+        v-model="repassword"
+        type="password"
+        name="repassword"
+        label="确认密码"
+        placeholder="确认密码"
+        :rules="[{ required: true, message: '请确认密码' }]"
+      />
       <div style="margin: 16px;">
         <van-button
           round
@@ -23,11 +31,11 @@
           type="info"
           color="linear-gradient(to right, #ff6034, #ee0a24)"
           native-type="submit"
-        >登录</van-button>
+        >注册</van-button>
       </div>
 
-      <div class="toRegister">
-        <router-link to="/register">新用户注册</router-link>
+      <div class="toLogin">
+        <router-link to="/login">已有账号？马上去登录</router-link>
       </div>
     </van-form>
   </div>
@@ -35,7 +43,7 @@
 
 <script>
 import { Form, Field, Button, Toast } from "vant";
-import { login } from "@/api/index.js";
+import { register } from "@/api/index.js";
 
 export default {
   components: {
@@ -44,7 +52,7 @@ export default {
     "van-button": Button,
   },
   created() {
-    this.$parent.title = "登录";
+    this.$parent.title = "注册";
     this.$parent.active = -1;
     this.$parent.isHome = false;
   },
@@ -52,29 +60,40 @@ export default {
     return {
       username: "",
       password: "",
+      repassword: "",
     };
   },
   methods: {
-    async onSubmit(values) {
-      let { message, status, token, userInfo } = await login(values);
-      if (status == 0) {
-        localStorage.setItem("token", token);
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        this.$router.push("/home");
+    async onSubmit() {
+      if (this.password.trim() !== this.repassword.trim()) {
+        Toast("密码不一致，请重新尝试");
+        return;
       }
+
+      let obj = {
+        username: this.username.trim(),
+        password: this.password.trim(),
+      };
+
+      let { status, message } = await register(obj);
       Toast(message);
+      if (status == 1) {
+        return;
+      }
+      //   注册成功跳转登录 为了获取token
+      this.$router.push("/login");
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.login-container {
+.register-container {
   margin-top: 20px;
 
-  .toRegister {
+  .toLogin {
     text-align: center;
-    color: rgba(138, 138, 138, 0.76);
+    color: rgba(133, 132, 132, 0.37);
   }
 }
 </style>

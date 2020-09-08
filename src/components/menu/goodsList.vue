@@ -55,6 +55,7 @@ export default {
     this.getGoodsListData();
   },
   methods: {
+    //   获取商品列表数据
     async getGoodsListData() {
       // 判断是否有更多 false不再发送请求
       if (this.isMore) {
@@ -71,6 +72,7 @@ export default {
         Toast("已加载完全部商品");
       }
     },
+    // 加载更多
     onLoad() {
       setTimeout(() => {
         if (this.refreshing) {
@@ -90,6 +92,7 @@ export default {
         }
       }, 1000);
     },
+    // 重新加载
     onRefresh() {
       // 清空列表数据
       this.finished = false;

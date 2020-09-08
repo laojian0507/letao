@@ -6,7 +6,7 @@
         <a href="#/home">首页</a>逛逛吧!
       </h3>
       <img src="@/assets/images/car.png" alt />
-      <div>
+      <div v-if="!$store.state.userInfo">
         <a href="#/login">登录</a> 后可以同步电脑与手机购物车中的商品
       </div>
     </div>
@@ -97,7 +97,7 @@ import {
   Icon,
   ImagePreview,
 } from "vant";
-import { getshopcarlist } from "@/api/index.js";
+import { getshopcarlist, isLogin } from "@/api/index.js";
 export default {
   components: {
     "van-divider": Divider,
@@ -129,9 +129,17 @@ export default {
       my_cart_data: [], //真正的购物车数据
       select_result: [], //存储选中的商品的id
       show: false,
+      isLogin: true,
     };
   },
   methods: {
+    async isLoginMethods() {
+      let status = await isLogin();
+      // 成功
+      if (status == 0) {
+          this.isLogin = true;
+      }
+    },
     onAdd() {
       Toast("新增地址");
     },
@@ -217,6 +225,8 @@ export default {
     this.$parent.isHome = true;
     this.getMyCartData();
     this.checked_goods();
+    this.isLoginMethods();
+    // isLogin();
   },
 };
 </script>

@@ -20,7 +20,7 @@ function uploadDist () {
   // 上传目录中的文件，到远程目录
   ssh.putDirectory(static_dir, site_dir, {
     recursive: true,	// 递归上传
-    concurrency: 10,	// 并发数
+    concurrency: 50,	// 并发数
     validate: function (itemPath) {
       console.log(itemPath)  // 打印上传的文件，方便查看
       const baseName = path.basename(itemPath)

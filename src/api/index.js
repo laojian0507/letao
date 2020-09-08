@@ -78,3 +78,51 @@ export function getshopcarlist(id) {
     return instance.get(`/getshopcarlist/${id}`);
 }
 
+// 用户登录
+export function login(data) {
+    return instance.post(`/login`,data);
+}
+
+// 判断是否登录
+export async function isLogin() {
+    let token = localStorage.getItem("token");
+    try {
+        //{status: 0, message: "ok"}
+        let res = await instance.post(`/checktoken?token=${token}`);
+        return res.status;
+    }catch (e) {
+        // throw new Error("token解析错误");
+    }
+}
+
+
+// 用户注册
+export function register(data) {
+    return instance.post(`/register`,data);
+}
+
+// export function getUserInfo() {
+//     return JSON.parse(localStorage.getItem('userInfo') || "");
+// }
+
+// 用户添加收货地址
+export function addaddress(userId, info) {
+    return instance.post(`/addaddress/${userId}`, info);
+}
+
+// 获取用户收货地址
+export function getaddress(userId) {
+    return instance.get(`/getaddress/${userId}?v=${Math.random()}`);
+}
+
+// 编辑用户收货地址
+export function updateaddress(addressId, info) {
+    return instance.post(`/updateaddress/${addressId}`, info);
+}
+
+// 删除用户收货地址
+export function deladdress(addressId) {
+    return instance.post(`/deladdress/${addressId}`);
+}
+
+

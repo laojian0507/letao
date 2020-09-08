@@ -115,7 +115,7 @@ export default {
     this.getSwipeData();
     this.getGoodsListData();
     this.$parent.title = "首页";
-    this.$parent.active = 0;
+    this.$parent.active = 0; 
     this.$parent.isHome = true;
   },
 };
