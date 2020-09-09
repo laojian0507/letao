@@ -41,7 +41,7 @@ export default {
       this.$router.push("/addaddress");
     },
     onEdit(item, index) {
-        item = JSON.stringify(item)
+      item = JSON.stringify(item);
       this.$router.push(`/addressEdit/${item}`);
     },
     async getaddressData() {

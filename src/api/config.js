@@ -14,6 +14,11 @@ instance.interceptors.request.use(function (config) {
     let token = localStorage.getItem('token') || "";
     token && (config.headers.token = token)
 
+    // console.log(config);
+    // console.log(config.url.indexOf('?'));
+    // config.url.indexOf('?') > -1 ? config.url = config.url+`&v=${Math.random()}` : config.url = config.url+`?v=${Math.random()}`;
+    // console.log(config.url);
+
     return config;
 }, function (err) {
     return Promise.reject(err);

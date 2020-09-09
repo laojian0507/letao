@@ -54,6 +54,10 @@ const store = new Vuex.Store({
             })
             localStorage.setItem("mycart", JSON.stringify(state.carData));
 
+        },
+        // 切换用户修改 userInfo
+        updataUserInfo(state, userInfo) {
+            state.userInfo = userInfo;
         }
 
     },

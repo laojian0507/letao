@@ -97,7 +97,7 @@ import {
   Icon,
   ImagePreview,
 } from "vant";
-import { getshopcarlist, isLogin } from "@/api/index.js";
+import { getshopcarlist, isLogin, getaddress } from "@/api/index.js";
 export default {
   components: {
     "van-divider": Divider,
@@ -115,15 +115,7 @@ export default {
   data() {
     return {
       chosenAddressId: "1",
-      list: [
-        {
-          id: "1",
-          name: "郑先生",
-          tel: "13000000000",
-          address: "广东省深圳市龙华区观澜街道旅游商务学校",
-          isDefault: true,
-        },
-      ],
+      list: [],
       checked: false,
       shopCart_data: this.$store.state.carData,
       my_cart_data: [], //真正的购物车数据
@@ -133,11 +125,19 @@ export default {
     };
   },
   methods: {
+    async getaddressData() {
+      let userId = this.$store.state.userInfo.id;
+      let list = await getaddress(userId);
+      list.map((v) => {
+        v.address = v.city + v.province + v.country + v.addressDetail;
+        v.isDefault == 1 && this.list.push(v);
+      });
+    },
     async isLoginMethods() {
       let status = await isLogin();
       // 成功
       if (status == 0) {
-          this.isLogin = true;
+        this.isLogin = true;
       }
     },
     onAdd() {
@@ -226,7 +226,7 @@ export default {
     this.getMyCartData();
     this.checked_goods();
     this.isLoginMethods();
-    // isLogin();
+    this.getaddressData();
   },
 };
 </script>

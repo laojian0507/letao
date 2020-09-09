@@ -61,6 +61,8 @@ export default {
         localStorage.setItem("token", token);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
         this.$router.push("/home");
+        // 登录成功修改store中的用户数据
+        this.$store.commit('updataUserInfo', userInfo);
       }
       Toast(message);
     },

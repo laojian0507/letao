@@ -7,7 +7,8 @@
         <img src="@/assets/images/logo.png" alt />
         <van-search placeholder="请输入搜索关键词" />
       </div>
-      <van-nav-bar v-else :title="title" left-text="返回" @click-left="$router.go(-1)" left-arrow></van-nav-bar>
+      <!-- $router.go(-1) -->
+      <van-nav-bar v-else :title="title" left-text="返回" @click-left="goBack" left-arrow></van-nav-bar>
     </van-sticky>
 
     <!-- 中间 -->
@@ -57,6 +58,17 @@ export default {
       title: "",
       isHome: true,
     };
+  },
+  methods: {
+    goBack() {
+      if (this.title === "收货地址") {
+        this.$router.push("/person");
+      } else if (this.title === "我的乐淘") {
+        this.$router.push("/home");
+      } else {
+        this.$router.go(-1);
+      }
+    },
   },
 };
 </script>

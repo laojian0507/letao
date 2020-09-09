@@ -91,7 +91,7 @@ export async function isLogin() {
         let res = await instance.post(`/checktoken?token=${token}`);
         return res.status;
     }catch (e) {
-        // throw new Error("token解析错误");
+        throw new Error("token解析错误");
     }
 }
 
